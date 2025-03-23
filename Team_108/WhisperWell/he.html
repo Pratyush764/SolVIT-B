@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Medicine Reminder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            background: url('image/Untitled design (1).gif') no-repeat center center fixed;
+            background-size: cover;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: auto;
+            transition: box-shadow 0.3s ease;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 4em;
+            text-shadow: 2px 2px 3px rgb(0 0 0);
+        }
+
+        input,
+        button,
+        select {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+
+        input:focus {
+            border-color: #218838;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+            outline: none;
+            transform: scale(1.02); /* Slightly scale up on focus */
+        }
+
+        input:hover {
+            border-color: #218838; /* Change border color on hover */
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* Add shadow on hover */
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 5px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        button:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 0;
+        }
+
+        button:hover:after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .stop-btn {
+            background-color: #dc3545;
+        }
+
+        .stop-btn:hover {
+            background-color: #c82333;
+        }
+
+        .day-checkbox {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .day-checkbox label {
+            cursor: pointer;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        li {
+            background: #e9ecef;
+            padding: 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            position: relative;
+            transition: background 0.3s, opacity 0.3s; /* Added opacity transition */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            opacity: 1; /* Default opacity */
+        }
+
+        li.fade-in {
+            opacity: 0;
+            animation: fadeIn 0.3s forwards; /* Fade-in animation */
+        }
+
+        li.fade-out {
+            opacity: 1;
+            animation: fadeOut 0.3s forwards; /* Fade-out animation */
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        li:hover {
+            background: #d3d3d3;
+        }
+
+        .snooze-btn {
+            background-color: #ffc107;
+        }
+
+        .snooze-btn:hover {
+            background-color: #e0a800;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+            }
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Advanced Medicine Reminder</h1>
+
+    <div class="container">
+        <div class="input-group">
+            <input type="text" id="medicineName" placeholder="Enter medicine name" required>
+            <input type="date" id="medicineDate" required>
+            <input type="time" id="medicineTime" required>
+            <label>Repeat on:</label>
+            <div class="day-checkbox">
+                <label><input type="checkbox" value="Sunday"> Sun</label>
+                <label><input type="checkbox" value="Monday"> Mon</label>
+                <label><input type="checkbox" value="Tuesday"> Tue</label>
+                <label><input type="checkbox" value="Wednesday"> Wed</label>
+                <label><input type="checkbox" value="Thursday"> Thu</label>
+                <label><input type="checkbox" value="Friday"> Fri</label>
+                <label><input type="checkbox" value="Saturday"> Sat</label>
+            </div>
+            <label>Frequency:</label>
+            <select id="frequency">
+                <option value="1">Once</option>
+                <option value="2">Every 2 hours</option>
+                <option value="24">Daily</option>
+                <option value="168">Weekly</option>
+            </select>
+            <button onclick="addMedicine()"><i class="fas fa-plus"></i> Add Medicine</button>
+            <button onclick="startVoiceInput()"><i class="fas fa-microphone"></i> Voice Input</button>
+            <label>Upload Custom Sound:</label>
+            <input type="file" id="customSound" accept="audio/*">
+        </div>
+        <ul id="reminderList"></ul>
+    </div>
+
+    <audio id="notificationSound" src="notification.mp3"></audio>
+    <audio id="ironManVoice" src="iron_man_voice.mp3"></audio>
+
+    <script>
+        let reminders = JSON.parse(localStorage.getItem('reminders')) || {};
+        let streaks = JSON.parse(localStorage.getItem('streaks')) || {};
+
+        // Request notification permission
+        if (Notification.permission !== "granted") {
+            Notification.requestPermission();
+        }
+
+        if ('webkitSpeechRecognition' in window) {
+            let recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.onresult = (event) => {
+                document.getElementById('medicineName').value = event.results[0][0].transcript;
+            };
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error", event);
+            };
+            function startVoiceInput() {
+                recognition.start();
+            }
+        }
+
+        function addMedicine() {
+            const name = document.getElementById('medicineName').value;
+            const date = document.getElementById('medicineDate').value;
+            const time = document.getElementById('medicineTime').value;
+            const selectedDays = Array.from(document.querySelectorAll('.day-checkbox input:checked')).map(day => day.value);
+            const frequency = parseInt(document.getElementById('frequency').value);
+
+            if (!name || !date || !time) {
+                alert("Please fill in all fields");
+                return;
+            }
+
+            const reminderDateTime = new Date(`${date}T${time}:00`);
+            const now = new Date();
+
+            // If the reminder time is in the past, set it for the next occurrence
+            if (reminderDateTime <= now) {
+                reminderDateTime.setDate(reminderDateTime.getDate() + 1);
+            }
+
+            const reminderId = setInterval(() => {
+                sendNotification(name, selectedDays);
+            }, frequency * 60 * 1000); // frequency in minutes
+
+            reminders[name] = { id: reminderId, days: selectedDays, dateTime: reminderDateTime };
+            localStorage.setItem('reminders', JSON.stringify(reminders));
+
+            displayReminder(name, date, time, selectedDays);
+        }
+
+        function sendNotification(medicine, days) {
+            let today = new Date().toLocaleString('en-us', { weekday: 'long' });
+
+            if (days.length === 0 || days.includes(today)) {
+                if (Notification.permission === "granted") {
+                    new Notification("Medicine Reminder", { body: `Time to take your ${medicine}!` });
+                }
+                playCustomSound();
+                playIronManVoice(); // Play Iron Man voice
+                speakReminder(medicine);
+
+                // Ask if the user took the medicine
+                setTimeout(() => {
+                    const tookMedicine = confirm(`Did you take your ${medicine}?`);
+                    updateStreak(medicine, tookMedicine);
+                }, 1000); // Wait for 1 second before asking
+            }
+        }
+
+        function updateStreak(medicine, tookMedicine) {
+            const now = new Date();
+            const medicineStreak = streaks[medicine] || { count: 0, lastTaken: null };
+
+            if (tookMedicine) {
+                medicineStreak.count += 1; // Increment streak
+                medicineStreak.lastTaken = now.toISOString(); // Update last taken time
+                alert(`Great job! Your current streak for ${medicine} is ${medicineStreak.count}.`);
+
+                // Automatically snooze for 2 minutes
+                setTimeout(() => {
+                    sendNotification(medicine, []); // Send notification again after 2 minutes
+                }, 2 * 60 * 1000); // 2 minutes in milliseconds
+            } else {
+                // If not taken, set a timeout to break the streak after 24 hours
+                const lastTakenTime = new Date(medicineStreak.lastTaken);
+                const timeSinceLastTaken = now - lastTakenTime;
+
+                if (timeSinceLastTaken >= 24 * 60 * 60 * 1000) {
+                    medicineStreak.count = 0; // Break the streak
+                    alert(`Your streak for ${medicine} has been broken.`);
+                }
+            }
+
+            streaks[medicine] = medicineStreak;
+            localStorage.setItem('streaks', JSON.stringify(streaks));
+        }
+
+        function playCustomSound() {
+            let fileInput = document.getElementById('customSound');
+            let sound = document.getElementById('notificationSound');
+            if (fileInput.files.length > 0) {
+                let file = URL.createObjectURL(fileInput.files[0]);
+                sound.src = file;
+            }
+            sound.play();
+        }
+
+        function playIronManVoice() {
+            const ironManSound = document.getElementById('ironManVoice');
+            ironManSound.play();
+        }
+
+        function stopReminder(medicine, listItem) {
+            clearInterval(reminders[medicine].id);
+            delete reminders[medicine];
+            localStorage.setItem('reminders', JSON.stringify(reminders));
+            alert(`${medicine} reminder stopped.`);
+            listItem.classList.add('fade-out'); // Add fade-out class
+            setTimeout(() => {
+                listItem.remove(); // Remove after fade-out
+            }, 300); // Match the duration of the fade-out transition
+        }
+
+        function displayReminder(name, date, time, days) {
+            const li = document.createElement("li");
+            li.textContent = `${name} - ${date} at ${time} (${days.length ? days.join(', ') : 'Everyday'}) `;
+            li.classList.add('fade-in'); // Add fade-in class
+
+            const stopBtn = document.createElement("button");
+            stopBtn.innerHTML = '<i class="fas fa-stop"></i>';
+            stopBtn.className = "stop-btn";
+            stopBtn.onclick = () => stopReminder(name, li);
+            li.appendChild(stopBtn);
+
+            const snoozeBtn = document.createElement("button");
+            snoozeBtn.innerHTML = '<i class="fas fa-clock"></i>';
+            snoozeBtn.className = "snooze-btn";
+            snoozeBtn.onclick = () => snoozeReminder(name, li);
+            li.appendChild(snoozeBtn);
+
+            document.getElementById('reminderList').appendChild(li);
+        }
+
+        function snoozeReminder(medicine) {
+            let minutes = prompt("Snooze for how many minutes? (5, 10, 30)");
+            if ([5, 10, 30].includes(Number(minutes))) {
+                setTimeout(() => sendNotification(medicine, []), minutes * 60000);
+                alert(`${medicine} snoozed for ${minutes} minutes.`);
+            } else {
+                alert("Invalid snooze time.");
+            }
+        }
+
+        function speakReminder(medicine) {
+            const utterance = new SpeechSynthesisUtterance(`Time to take your ${medicine}!`);
+            speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+
+</html>

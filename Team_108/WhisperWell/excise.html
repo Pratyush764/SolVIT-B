@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Recommendation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('IMAGE/WhatsApp Image 2025-03-23 at 04.17.07_63c0d56d.jpg'); /* Sample image URL */
+            background-size: cover; /* Ensures the image covers the entire background */
+            background-position: center; /* Centers the image */
+            color: white;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+        h2 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        input {
+            padding: 12px;
+            width: 300px;
+            border-radius: 25px;
+            border: none;
+            margin: 15px 0;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            background: #ff9800;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: 0.3s;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            background: #e68900;
+            transform: scale(1.05);
+        }
+        #recommendation {
+            margin-top: 25px;
+            font-size: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            border-radius: 15px;
+            display: inline-block;
+            max-width: 600px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: left;
+        }
+        .exercise {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+            position: relative; /* For positioning the shadow */
+        }
+        .exercise:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px); /* Lift effect */
+        }
+        .exercise i {
+            color: #ff9800;
+            margin-right: 10px;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .input-container input {
+            margin-right: 10px;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 14px;
+            color: #ccc;
+        }
+    </style>
+    <script>
+        function getExerciseRecommendation() {
+            let exercises = {
+                "Walking": "Improves cardiovascular health, aids weight loss, reduces stress.",
+                "Yoga": "Enhances flexibility, reduces stress, improves balance and strength.",
+                "Hatha Yoga": "Improves posture, increases mindfulness, enhances flexibility.",
+                "Vinyasa Yoga": "Boosts stamina, strengthens muscles, improves coordination.",
+                "Ashtanga Yoga": "Increases endurance, builds strength, enhances focus.",
+                "Bikram Yoga": "Detoxifies body, improves flexibility, strengthens core.",
+                "Kundalini Yoga": "Boosts energy, strengthens nervous system, improves mental clarity.",
+                "Restorative Yoga": "Reduces stress, aids recovery, improves relaxation.",
+                "Yin Yoga": "Increases joint mobility, improves circulation, enhances flexibility.",
+                "Chair Yoga": "Great for seniors, improves flexibility, reduces stiffness.",
+                "Prenatal Yoga": "Supports pregnancy, reduces stress, improves posture.",
+                "Swimming": "Full-body workout, improves lung capacity, joint-friendly.",
+                "Strength Training": "Builds muscle, increases metabolism, strengthens bones.",
+                "Cycling": "Good for heart health, improves leg strength, low-impact exercise.",
+                "Aerobic exercises": "Boosts endurance, burns calories, strengthens heart and lungs.",
+                "Stretching": "Increases flexibility, reduces injury risk, improves posture.",
+                "Water Aerobics": "Low impact, great for arthritis, builds endurance.",
+                "Tai Chi": "Enhances balance, reduces stress, improves flexibility.",
+                "Cardio workouts": "Strengthens heart, burns fat, increases stamina.",
+                "Jump Rope": "Burns calories, improves coordination, strengthens bones.",
+                "Pilates": "Core strengthening, improves flexibility, enhances posture.",
+                "Planking": "Strengthens core, improves stability, enhances posture.",
+                "Brisk Walking": "Boosts cardiovascular health, aids weight loss, reduces stress.",
+                "Dancing": "Fun full-body workout, improves coordination, burns calories.",
+                "Jogging": "Strengthens heart, burns calories, improves stamina.",
+                "Hiking": "Builds endurance, strengthens legs, improves mental health.",
+                "Resistance Training": "Builds strength, increases bone density, boosts metabolism.",
+                "Elliptical Training": "Low-impact cardio, strengthens legs, burns calories.",
+                "Rowing": "Full-body workout, builds endurance, strengthens back and arms.",
+                "Boxing": "Improves reflexes, strengthens muscles, boosts stamina.",
+                "Zumba": "A fun, dance-based workout that improves cardiovascular health.",
+                "Kickboxing": "Combines martial arts techniques with heart-pumping cardio.",
+                "Barre": "A workout that combines ballet, Pilates, and yoga for strength and flexibility.",
+                "CrossFit": "High-intensity functional training that builds strength and endurance.",
+                "Rock Climbing": "A full-body workout that enhances strength, balance, and problem-solving skills.",
+                "Jumping Jacks": "A simple aerobic exercise that increases heart rate and improves coordination.",
+                "Resistance Band Training": "A versatile way to build strength using bands.",
+                "Agility Ladder Drills": "Improves coordination, speed, and agility.",
+                "Kundalini Yoga": "Focuses on awakening energy through breath, movement, and meditation.",
+                "Power Yoga": "A vigorous, fitness-based approach to yoga that builds strength and flexibility.",
+                "Acro Yoga": "Combines yoga and acrobatics, focusing on balance and trust.",
+                "Jivamukti Yoga": "Integrates physical, ethical, and spiritual practices in a dynamic flow.",
+                "Sivananda Yoga": "Emphasizes a holistic approach to yoga, including postures, breathing, and relaxation.",
+                "Anusara Yoga": "Focuses on alignment and heart-centered practice.",
+                "Yoga Nidra": "A guided meditation practice that promotes deep relaxation and stress relief."
+            };
+            
+            let exerciseKeys = Object.keys(exercises);
+            let randomExercises = [];
+            while (randomExercises.length < 5) {
+                let randomExercise = exerciseKeys[Math.floor(Math.random() * exerciseKeys.length)];
+                if (!randomExercises.includes(randomExercise)) {
+                    randomExercises.push(randomExercise);
+                }
+            }
+            
+            let recommendations = randomExercises.map(ex => `<div class="exercise"><i class="fas fa-dumbbell"></i><strong>${ex}</strong>: ${exercises[ex]}</div>`).join("");
+            document.getElementById("recommendation").innerHTML = recommendations;
+        }
+    </script>
+</head>
+<body>
+    <h2>Exercise Recommendation System</h2>
+    <div class="input-container">
+        <label for="disease">Enter your disease:</label>
+        <input type="text" id="disease" placeholder="e.g., Diabetes">
+        <button onclick="getExerciseRecommendation()">Get Recommendation</button>
+    </div>
+    <p><strong>Recommended Exercises:</strong></p>
+    <div id="recommendation"></div>
+    <footer>
+        &copy; 2023 Exercise Recommendation System. All rights reserved.
+    </footer>
+</body>
+</html>
